@@ -1,7 +1,7 @@
 ID=$(id -u)
 
 TIMESTAMP=$(date +%F-%H%M)
-LOGFILE="/temp/$0-$TIMESTAMP.log"
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
 if [ "$ID" -ne 0 ]
 then
@@ -24,13 +24,13 @@ VALIDATE() {
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Creating mongo.repo file"
 
-dnf install mongodb-org -y  &>> $LOGFILE
+dnf install mongodb-org -y &>> $LOGFILE
 VALIDATE $? "Installing MongoDB"
 
-systemctl enable mongod  &>> $LOGFILE
+systemctl enable mongod &>> $LOGFILE
 VALIDATE $? "Enabling MongoDB Service"
 
-systemctl start mongod  &>> $LOGFILE
+systemctl start mongod &>> $LOGFILE
 VALIDATE $? "Starting MongoDB Service"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf

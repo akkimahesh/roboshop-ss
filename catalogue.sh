@@ -35,3 +35,39 @@ VALIDATE $? "Setting default Node.js version to 18"
 
 node -v
 npm -v
+
+useradd roboshop 
+VALIDATE $? "Creating roboshop user"
+
+mkdir -p /app 
+VALIDATE $? "Creating /app directory"
+
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>> $LOGFILE
+VALIDATE $? "Downloading catalogue application code"
+
+cd /app
+VALIDATE $? "Changing to /app directory"
+
+unzip /tmp/catalogue.zip &>> $LOGFILE
+VALIDATE $? "Extracting catalogue application code"
+
+npm install &>> $LOGFILE
+VALIDATE $? "Installing catalogue application dependencies"
+
+cp /root/roboshop-ss/catalogue.service /etc/systemd/system/catalogue.service
+VALIDATE $? "Copying catalogue.service to systemd directory"
+
+systemctl daemon-reload &>> $LOGFILE
+VALIDATE $? "Reloading systemd daemon"
+
+systemctl enable catalogue &>> $LOGFILE
+VALIDATE $? "Enabling catalogue service"
+
+systemctl start catalogue &>> $LOGFILE
+VALIDATE $? "Starting catalogue service"
+
+cp /root/roboshop-ss/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Creating mongo.repo file"
+
+yum install -y mongodb-org &>> $LOGFILE
+VALIDATE $? "Installing MongoDB"

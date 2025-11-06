@@ -77,3 +77,15 @@ VALIDATE $? "Loading catalogue schema to MongoDB"
 
 systemctl restart catalogue
 VALIDATE $? "Restarting catalogue service"
+
+cp /root/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Creating mongo.repo file"
+
+sudo yum install -y mongodb-org &>> $LOGFILE
+VALIDATE $? "Installing MongoDB"
+
+mongosh --host mongodb.maheshakki.shop < /app/schema/catalogue.js &>> $LOGFILE
+VALIDATE $? "Loading catalogue schema to MongoDB"
+
+systemctl restart catalogue
+VALIDATE $? "Restarting catalogue service"

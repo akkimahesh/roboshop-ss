@@ -30,5 +30,5 @@ VALIDATE $? "Installing Redis Server"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
 VALIDATE $? "Configuring Redis to listen on all interfaces"
 
-systemctl restart redis &>> $LOGFILE
+systemctl restart redis
 VALIDATE $? "Restarting Redis Service"

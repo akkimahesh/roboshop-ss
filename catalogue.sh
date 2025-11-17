@@ -36,8 +36,14 @@ VALIDATE $? "Setting default Node.js version to 18"
 node -v
 npm -v
 
-useradd -m roboshop 
-VALIDATE $? "Creating roboshop user"
+id roboshop #if roboshop user does not exist, then it is failure
+if [ $? -ne 0 ]
+then
+    useradd roboshop
+    VALIDATE $? "roboshop user creation"
+else
+    echo -e "roboshop user already exist $Y SKIPPING $N"
+fi
 
 mkdir -p /app 
 VALIDATE $? "Creating /app directory"

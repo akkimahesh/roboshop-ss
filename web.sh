@@ -51,5 +51,5 @@ VALIDATE $? "Extracting web application code"
 cp /root/roboshop-ss/roboshop.conf /etc/nginx/default.d/roboshop.conf
 VALIDATE $? "Copying roboshop.conf to Nginx directory"
 
-systemctl restart nginx &>> $LOGFILE
-VALIDATE $? "Restarting Nginx Service"
+systemctl start nginx &>> $LOGFILE
+VALIDATE $? "Starting Nginx Service"

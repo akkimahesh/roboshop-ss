@@ -1,3 +1,5 @@
+#!/bin/bash
+# USE Ubuntu
 ID=$(id -u)
 
 TIMESTAMP=$(date +%F-%H%M)

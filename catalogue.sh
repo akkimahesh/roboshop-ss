@@ -36,7 +36,7 @@ VALIDATE $? "Setting default Node.js version to 18"
 node -v
 npm -v
 
-useradd roboshop 
+useradd -m roboshop 
 VALIDATE $? "Creating roboshop user"
 
 mkdir -p /app 
